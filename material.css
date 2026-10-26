@@ -40,7 +40,8 @@ body[data-sn-mode="2"]{--matter:185,192,228;--matter-strong:#c7cce9;--edge:rgba(
 .particle-pressed:after{animation:condense-matter .7s ease-out both}
 @keyframes condense-matter{0%{opacity:.07;transform:scale(1.25)}35%{opacity:.68;transform:scale(.75)}100%{opacity:.3;transform:scale(1)}}
 .sheet .primary{background:linear-gradient(120deg,rgba(var(--matter),.9),rgba(var(--matter),.68));color:#121919;border-color:rgba(var(--matter),.85)}
-.sheet-backdrop{background:rgba(4,7,10,.53);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
+/* Let the same continuous field remain perceptible above the open bottom sheet. */
+.sheet-backdrop{background:rgba(4,7,10,.43);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
 .sheet-backdrop:not(.hidden) .sheet{animation:sheet-resolve .58s cubic-bezier(.2,.74,.22,1) both}
 @keyframes sheet-resolve{0%{opacity:.3;filter:blur(11px);transform:translateY(26px) scale(.985)}65%{filter:blur(1px)}100%{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}}
 .sheet{background:linear-gradient(155deg,rgba(26,31,33,.96),rgba(11,17,20,.98));border-color:var(--edge)}
@@ -56,4 +57,16 @@ body[data-sn-mode="2"]{--matter:185,192,228;--matter-strong:#c7cce9;--edge:rgba(
 @media(prefers-reduced-motion:reduce){
  .text-reforming,.particle-pressed:after,.sheet-backdrop:not(.hidden) .sheet{animation:none!important}
  .material-forming{color:inherit!important}.material-forming .title-period{color:var(--matter-strong)!important}
+}
+
+/* The stage stays inside the device viewport. Only long editing sheets scroll. */
+html,body,#app{overscroll-behavior:none}
+@media(max-height:620px){
+  .stage .field-touch{min-height:18px}
+  .stage .top-caption{margin-top:4px}
+  .stage-content{padding-bottom:4px}
+  .stage-content .section-kicker{margin-bottom:4px}
+  .stage-content h1{font-size:clamp(35px,9vh,43px);margin-bottom:8px}
+  .stage-content p{line-height:1.4;margin-bottom:8px}
+  .mode-nav{padding-top:2px;padding-bottom:2px}
 }
