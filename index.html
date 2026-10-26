@@ -8,7 +8,6 @@
   <title>Second Nature — A laboratory for the mind</title>
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="stylesheet" href="/material.css" />
 </head>
 <body>
   <canvas id="particle-field" aria-hidden="true"></canvas>
@@ -21,7 +20,7 @@
 
     <section class="stage" aria-live="polite">
       <div class="top-caption"><span id="mode-id">01 / CONDITION</span><span id="progress-caption">YOUR MIND IS THE LAB</span></div>
-      <button type="button" id="field-touch" class="field-touch" aria-label="Explore the particle field"><span class="field-touch-label" id="field-touch-label"></span></button>
+      <div class="field-touch" aria-hidden="true"></div>
       <div class="stage-content" id="stage-content">
         <div class="section-kicker" id="mode-kicker">TRAIN A RESPONSE</div>
         <h1 id="mode-title">Condition<span class="title-period">.</span></h1>
@@ -54,6 +53,5 @@
   <noscript><div class="noscript">Second Nature requires JavaScript to run the interactive laboratory.</div></noscript>
   <script src="/particles.js" defer></script>
   <script src="/app.js" defer></script>
-  <script src="/material.js" defer></script>
 </body>
 </html>
