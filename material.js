@@ -127,7 +127,12 @@
     const button=event.target.closest('button');
     if(button){button.classList.remove('particle-pressed');void button.offsetWidth;button.classList.add('particle-pressed');}
     const field=event.target.closest('#field-touch');
-    if(field && window.SecondNatureParticles?.glide)window.SecondNatureParticles.glide(event.clientX,event.clientY);
+    if(field && window.SecondNatureParticles?.glide){
+      window.SecondNatureParticles.glide(event.clientX,event.clientY);
+    }else if(button && window.SecondNatureParticles?.react){
+      // Controls make the existing field sharpen locally, without emitting rings.
+      window.SecondNatureParticles.react(event.clientX,event.clientY);
+    }
   },{passive:true});
   document.addEventListener('pointermove',event=>{
     if(event.target.closest('#field-touch')&&window.SecondNatureParticles?.glide){
@@ -137,6 +142,20 @@
   document.querySelector('#field-touch')?.addEventListener('pointerleave',()=>{
     window.SecondNatureParticles?.glide?.(-9999,-9999);
   },{passive:true});
+  // Long forms can still scroll inside their bottom sheet; the main stage never scrolls.
+  // As a sheet moves, the field behind it changes focal depth instead of generating ripples.
+  document.addEventListener('scroll',event=>{
+    const node=event.target;
+    if(!node?.classList?.contains('sheet'))return;
+    const span=node.scrollHeight-node.clientHeight;
+    window.SecondNatureParticles?.onScroll?.(span>0?node.scrollTop/span:0);
+  },{capture:true,passive:true});
+  document.querySelector('.sheet-backdrop')?.addEventListener('transitionend',()=>{
+    if(document.querySelector('.sheet-backdrop')?.classList.contains('hidden')){
+      window.SecondNatureParticles?.setFocus?.(0);
+    }
+  });
+
   reduced.addEventListener?.('change',()=>{if(reduced.matches)document.querySelectorAll('.type-particles').forEach(x=>x.remove());});
   refreshMode();
 })();
